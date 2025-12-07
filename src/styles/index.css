@@ -1,4 +1,6 @@
-*, *::before, *::after {
+*,
+*::before,
+*::after {
 	box-sizing: border-box;
 }
 
@@ -8,7 +10,10 @@
 	font: inherit;
 }
 
-img, picture, svg, video {
+img,
+picture,
+svg,
+video {
 	display: block;
 	max-width: 100%;
 }
@@ -20,7 +25,8 @@ html {
 }
 
 body {
-	min-height: 100vh;   
+	min-height: 100vh;
+	background: #151515;
 }
 
 main{
@@ -28,35 +34,134 @@ main{
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: space-around;
+	justify-content: space-around; 
 }
 
-.output{
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	align-items: center;
-	max-width: 70%;
-	flex-wrap: wrap;
+.defs {
+	position: absolute;
+	width: 0;
+	height: 0;
+	pointer-events: none;
 }
 
-.word{
-	display: flex;
-	flex-direction: row;
-	margin: 0 0.6rem;
+.text-stack {
+	--label: "";
+
+	min-width: 6rem;
+	position: relative;
+	display: inline-block;
+	filter: hue-rotate(0deg);
+	animation: hue-cycle 2s linear infinite;
+
+	font-family: "Comic Sans MS", "Comic Sans", "Comic Neue", system-ui, sans-serif;
+	font-weight: 400;
+	font-size: 8rem;
+	letter-spacing: 0.15em;
+	text-transform: uppercase;
+	white-space: nowrap;
+	shape-rendering: geometricPrecision;
+	/* background-color: black; */
 }
 
-.word img{
-	height: 3rem;
-	margin: 0 -0.6rem 0 -0.2rem;
+.text-layer {
+	max-width: 100vw;
+	position: relative;
+	color: yellow;
+	filter: url(#warp-middle);
+	animation: 
+		wiggle-b 3s steps(30) infinite, 
+		color-cycle 6s linear infinite reverse;
 }
 
-textarea{
-	resize: none;
-	background-color: black;
-	border: none;
-	padding: 0.5em;
-	font-size: 1rem;
-	min-height: 4.5rem;
-	width: 50vw;
+.text-layer::before,
+.text-layer::after,
+.text-stack::after {
+	content: var(--label, "");
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.text-layer::before {
+	color: white;
+	-webkit-text-stroke: 1px white;
+	text-stroke: 1px white;
+	filter: url(#outline-warp);
+	transform: translate(var(--tx-a, 0px), var(--ty-a, 0px));
+	animation: wiggle-a 3s steps(30) infinite;
+}
+
+.text-layer::after {
+	color: red;
+	filter: url(#warp-top);
+	transform: translate(var(--tx-b, 0px), var(--ty-b, 0px));
+	animation: wiggle-b 3s steps(30) infinite, color-cycle 3s linear infinite;
+}
+
+.text-stack::after {
+	color: cyan;
+	-webkit-text-stroke: 0.03em white;
+	text-stroke: 0.03em white;
+	filter: url(#warp-top);
+
+	mix-blend-mode: exclusion;
+	opacity: 0.75;
+
+	transform: translate(var(--tx-top, 0px), var(--ty-top, 0px));
+	animation: wiggle-top-group 5s steps(48, end) infinite;
+}
+
+/* === Animations === */
+
+
+@keyframes wiggle-a {
+	0%   { --tx-a: 0px;    --ty-a: 0px;    }
+	9%   { --tx-a: 1.6px;  --ty-a: -1.9px; }
+	21%  { --tx-a: -2.3px; --ty-a: 1.5px;  }
+	33%  { --tx-a: 2.6px;  --ty-a: -2.2px; }
+	46%  { --tx-a: -1.9px; --ty-a: 2.1px;  }
+	59%  { --tx-a: 1.1px;  --ty-a: -1.6px; }
+	73%  { --tx-a: -1.4px; --ty-a: 1.9px;  }
+	86%  { --tx-a: 2.1px;  --ty-a: -1.4px; }
+	100% { --tx-a: 0px;    --ty-a: 0px;    }
+}
+
+@keyframes wiggle-b {
+	0%   { --tx-b: 0px;    --ty-b: 0px;    }
+	7%   { --tx-b: -2.4px; --ty-b: 1.9px;  }
+	16%  { --tx-b: 3.0px;  --ty-b: -2.6px; }
+	27%  { --tx-b: -2.1px; --ty-b: 2.8px;  }
+	39%  { --tx-b: 1.7px;  --ty-b: -3.1px; }
+	52%  { --tx-b: -3.2px; --ty-b: 1.6px;  }
+	66%  { --tx-b: 2.8px;  --ty-b: -2.0px; }
+	81%  { --tx-b: -1.9px; --ty-b: 2.3px;  }
+	100% { --tx-b: 0px;    --ty-b: 0px;    }
+}
+
+@keyframes hue-cycle {
+	0%   { filter: hue-rotate(0deg); }
+	100% { filter: hue-rotate(360deg); }
+}
+
+	@keyframes wiggle-top-group {
+	0%   { --tx-top: 0px;    --ty-top: 0px;    }
+	6%   { --tx-top: 5px;    --ty-top: -6px;   }
+	13%  { --tx-top: -6px;   --ty-top: 4px;    }
+	21%  { --tx-top: 7px;    --ty-top: 3px;    }
+	30%  { --tx-top: -5px;   --ty-top: -5px;   }
+	40%  { --tx-top: 6px;    --ty-top: 7px;    }
+	50%  { --tx-top: -8px;   --ty-top: 2px;    }
+	60%  { --tx-top: 4px;    --ty-top: -7px;   }
+	70%  { --tx-top: -7px;   --ty-top: 6px;    }
+	80%  { --tx-top: 8px;    --ty-top: -3px;   }
+	90%  { --tx-top: -6px;   --ty-top: -6px;   }
+	100% { --tx-top: 0px;    --ty-top: 0px;    }
+}
+
+@keyframes color-cycle {
+	0%   { color: red;    }
+	25%  { color: yellow; }
+	50%  { color: lime;   }
+	75%  { color: cyan;   }
+	100% { color: red;    }
 }
