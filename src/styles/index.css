@@ -88,7 +88,7 @@ main{
 .text-layer::before {
 	color: white;
 	-webkit-text-stroke: 1px white;
-	text-stroke: 1px white;
+	/* text-stroke: 1px white; */
 
 	filter: url(#outline-warp);
 	transform: translate(var(--tx-a, 0px), var(--ty-a, 0px));
@@ -104,7 +104,7 @@ main{
 .text-stack::after {
 	color: cyan;
 	-webkit-text-stroke: 0.03em white;
-	text-stroke: 0.03em white;
+	/* text-stroke: 0.03em white; */
 
 	mix-blend-mode: exclusion;
 	opacity: 0.75;
@@ -255,7 +255,7 @@ main{
 
 	.text-stack::after {
 		-webkit-text-stroke: 0.085em white;
-		text-stroke: 0.085em white;
+		/* text-stroke: 0.085em white; */
 	}
 
 	@keyframes wiggle-a {
@@ -310,7 +310,7 @@ main{
 	}
 	.text-layer::before {
 		-webkit-text-stroke: 0px white;
-		text-stroke: 0px white;
+		/* text-stroke: 0px white; */
 	}
 
 	
