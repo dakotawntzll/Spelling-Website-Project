@@ -63,7 +63,9 @@ editableStackElement.addEventListener("mousedown", function (event) {
 		textInputElement.setSelectionRange(1, 1)
 	}
 	if (firstInput) {
+		event.preventDefault()
 		textInputElement.focus()
+		textInputElement.setSelectionRange(1, 1)
 		textInputElement.value = ""
 		firstInput = false
 		updateLabel()
