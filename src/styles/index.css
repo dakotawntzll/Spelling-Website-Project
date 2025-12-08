@@ -237,13 +237,10 @@ main{
 
 
 
-@media (min-width: 95rem) {
+@media (min-width: 100rem) {
 	.text-stack,
 	.text-input {
 		font-size: 10rem;
-	}
-	.editable-stack {
-		max-width: 70vw;
 	}
 }
 
