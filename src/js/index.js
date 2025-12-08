@@ -33,11 +33,11 @@ function sanitizeText(inputText) {
 	}
 
 	if (filteredText === "") {
-		filteredText = " "
+		return filteredText = " "
 	}
 
 	if (filteredText.length > 1 && filteredText[0] === " ") {
-		filteredText = filteredText.slice(1)
+		return filteredText = filteredText.slice(1)
 	}
 
 	return filteredText
