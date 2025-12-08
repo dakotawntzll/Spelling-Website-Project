@@ -6,10 +6,89 @@
 		<title>Spelling With Seth Nova</title>
 		<link rel="stylesheet" href="./src/styles/index.css">
 
+		<!-- Google Fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+
 	</head>
 
     <body>
-        <div id="root"></div>
-        <script src="./src/main.jsx" type="module"></script>
+
+		<svg class="defs" aria-hidden="true">
+			<defs>
+				<filter id="outline-warp" x="-3%" y="-3%" width="106%" height="106%" 
+					color-interpolation-filters="sRGB" filterUnits="objectBoundingBox"
+				>
+
+					<feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="1" result="noise">
+						<animate attributeName="seed" dur="3s" values="1;2;3;4;5;6" repeatCount="indefinite" calcMode="discrete" />
+					</feTurbulence>
+
+					<feMorphology in="SourceAlpha" operator="dilate" radius="3" result="expanded" />
+
+					<feComposite in="expanded" in2="SourceAlpha" operator="out" result="outlineAlpha" />
+
+					<feFlood flood-color="white" result="outlineColor" />
+					<feComposite in="outlineColor" in2="outlineAlpha" operator="in" result="outline" />
+
+					<feDisplacementMap in="outline" in2="noise" scale="6" xChannelSelector="R"
+						yChannelSelector="G" result="displaced" 
+					/>
+
+					<feGaussianBlur in="displaced" stdDeviation="0.7" result="blurred" />
+
+					<feComposite in="blurred" in2="blurred" operator="over" />
+				</filter>
+
+				<filter id="warp-middle" x="-3%" y="-3%" width="106%" height="106%"
+					color-interpolation-filters="sRGB" filterUnits="objectBoundingBox"
+				>
+
+					<feTurbulence type="fractalNoise" baseFrequency="0.06" numOctaves="2" seed="11" result="noise">
+						<animate attributeName="seed" dur="12s" values="11;22;33;44" repeatCount="indefinite" calcMode="discrete" />
+					</feTurbulence>
+
+					<feDisplacementMap in="SourceGraphic" in2="noise" scale="6" xChannelSelector="R" yChannelSelector="G" result="displaced"/>
+
+					<feGaussianBlur in="displaced" stdDeviation="0.5" result="blurred" />
+
+					<feComposite in="blurred" in2="displaced" operator="over" />
+
+				</filter>
+
+				<filter id="warp-top" x="-3%" y="-3%" width="106%" height="106%"
+					color-interpolation-filters="sRGB" filterUnits="objectBoundingBox"
+				>
+
+					<feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="111" result="noise">
+						<animate attributeName="seed" dur="2s" values="111;222" repeatCount="indefinite" calcMode="discrete" />
+					</feTurbulence>
+
+					<feDisplacementMap in="SourceGraphic" in2="noise" scale="7" xChannelSelector="R" yChannelSelector="G" />
+				</filter>
+			</defs>
+		</svg>
+
+		<main>
+			<div class="editable-stack">
+				<div class="text-stack" aria-hidden="true">
+					<h1 class="text-layer"></h1>
+				</div>
+
+				<textarea
+					id="effect-input"
+					class="text-input"
+					autocomplete="off"
+					spellcheck="false"
+					aria-label="Type text to display with animated effect"
+					pattern="^[a-zA-Z0-9]*$"
+					maxlength="30"
+				>HELLO</textarea>
+			</div>
+		</main>
+
+
+        <script src="./src/js/index.js" type="module"></script>
     </body>
 </html>
