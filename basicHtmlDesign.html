@@ -22,7 +22,7 @@
 				>
 
 					<feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="1" result="noise">
-						<animate attributeName="seed" dur="1s" values="1;2" repeatCount="indefinite" calcMode="discrete" />
+						<animate attributeName="seed" dur="3s" values="1;2;3;4;5;6" repeatCount="indefinite" calcMode="discrete" />
 					</feTurbulence>
 
 					<feMorphology in="SourceAlpha" operator="dilate" radius="3" result="expanded" />
@@ -36,7 +36,7 @@
 						yChannelSelector="G" result="displaced" 
 					/>
 
-					<feGaussianBlur in="displaced" stdDeviation="0.75" result="blurred" />
+					<feGaussianBlur in="displaced" stdDeviation="0.7" result="blurred" />
 
 					<feComposite in="blurred" in2="blurred" operator="over" />
 				</filter>
@@ -45,7 +45,10 @@
 					color-interpolation-filters="sRGB" filterUnits="objectBoundingBox"
 				>
 
-					<feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="11" result="noise" />
+
+					<feTurbulence type="fractalNoise" baseFrequency="0.06" numOctaves="2" seed="11" result="noise">
+						<animate attributeName="seed" dur="12s" values="11;22;33;44" repeatCount="indefinite" calcMode="discrete" />
+					</feTurbulence>
 
 					<feDisplacementMap in="SourceGraphic" in2="noise" scale="6" xChannelSelector="R" yChannelSelector="G" result="displaced"/>
 
@@ -69,12 +72,24 @@
 		</svg>
 
 		<main>
-			<div class="text-stack">
-				<h1 class="text-layer" contenteditable="true">Hello</h1>
+			<div class="editable-stack">
+				<div class="text-stack" aria-hidden="true">
+					<h1 class="text-layer"></h1>
+				</div>
+
+				<textarea
+					id="effect-input"
+					class="text-input"
+					autocomplete="off"
+					spellcheck="false"
+					aria-label="Type text to display with animated effect"
+					pattern="^[a-zA-Z0-9]*$"
+					maxlength="30"
+				>HELLO</textarea>
 			</div>
 		</main>
 
 
-        <script src="./src/js/index.js" ></script>
+        <script src="./src/js/index.js" type="module"></script>
     </body>
 </html>
