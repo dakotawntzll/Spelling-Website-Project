@@ -5,6 +5,8 @@ const textLayerElement = document.querySelector(".text-layer")
 const textInputElement = document.querySelector("#effect-input")
 const editableStackElement = document.querySelector("#effect-input")
 
+let firstInput = true
+
 function updateLabel() {
 	let rawText = textInputElement.value
 	rawText = limitLines(rawText)
@@ -59,6 +61,12 @@ editableStackElement.addEventListener("mousedown", function (event) {
 		event.preventDefault()
 		textInputElement.focus()
 		textInputElement.setSelectionRange(1, 1)
+	}
+	if (firstInput) {
+		textInputElement.focus()
+		textInputElement.value = ""
+		firstInput = false
+		updateLabel()
 	}
 })
 
